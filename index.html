@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#6d28d9">
+  <meta name="description" content="Birthday Link Studio — buat kartu ulang tahun digital, install sebagai aplikasi, lalu bagikan melalui link.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Birthday Link">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <title>Birthday Link Studio</title>
+</head>
+<body>
+  <div id="fxLayer" class="fx-layer" aria-hidden="true"></div>
+
+  <main id="builderView" class="app-shell">
+    <header class="topbar glass">
+      <a class="brand" href="./" aria-label="Birthday Link Studio">
+        <span class="brand-mark">🎂</span>
+        <span><strong>Birthday Link</strong><small>Studio 2.0</small></span>
+      </a>
+      <div class="top-actions">
+        <button id="installBtn" class="btn tiny secondary hidden" type="button">⬇ Install</button>
+        <button id="previewBtn" class="btn tiny ghost" type="button">👁 Preview penerima</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <span class="eyebrow">Buat • Rayakan • Bagikan</span>
+      <h1>Kartu ulang tahun personal yang hidup di sebuah <em>link.</em></h1>
+      <p>Tambahkan foto, pesan, tema, efek, tanggal spesial, dan musik. Setelah selesai, kirimkan link-nya lewat WhatsApp atau aplikasi lain.</p>
+      <div class="hero-badges"><span>✓ Tanpa login</span><span>✓ Bisa di-install</span><span>✓ Mobile friendly</span><span>✓ Data tetap di link</span></div>
+    </section>
+
+    <section class="workspace">
+      <form id="cardForm" class="editor glass" autocomplete="off">
+        <div class="editor-head">
+          <div><span class="step">01</span><h2>Personalisasi kartu</h2></div>
+          <button id="saveDraftBtn" class="text-btn" type="button">Simpan draft</button>
+        </div>
+
+        <div class="editor-section">
+          <div class="section-label">Penerima</div>
+          <div class="form-grid two">
+            <label><span>Nama penerima</span><input id="recipientInput" maxlength="40" value="Citra" placeholder="Nama penerima"></label>
+            <label><span>Tanggal ulang tahun</span><input id="dateInput" type="date"></label>
+          </div>
+          <label><span>Foto penerima <small>(opsional)</small></span>
+            <div class="photo-upload">
+              <input id="photoInput" type="file" accept="image/*" hidden>
+              <button id="photoPickBtn" class="btn secondary" type="button">📷 Pilih foto</button>
+              <button id="photoRemoveBtn" class="btn ghost hidden" type="button">Hapus foto</button>
+              <span id="photoStatus">Belum ada foto</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="editor-section">
+          <div class="section-label">Ucapan</div>
+          <label><span>Template cepat</span>
+            <div class="template-row">
+              <select id="templateSelect">
+                <option value="warm">Hangat</option>
+                <option value="romantic">Romantis</option>
+                <option value="fun">Ceria</option>
+                <option value="elegant">Elegan</option>
+                <option value="prayer">Doa & harapan</option>
+              </select>
+              <button id="applyTemplateBtn" class="btn secondary" type="button">Terapkan</button>
+            </div>
+          </label>
+          <label><span>Judul ucapan</span><input id="titleInput" maxlength="80" value="Selamat Ulang Tahun!" placeholder="Selamat Ulang Tahun!"></label>
+          <label><span>Pesan</span><textarea id="messageInput" maxlength="650" rows="7">Semoga hari istimewamu dipenuhi kebahagiaan, tawa, dan semua hal baik yang kamu harapkan. Semoga setiap langkahmu ke depan semakin indah. ✨</textarea><small class="counter"><b id="messageCount">0</b>/650</small></label>
+          <label><span>Nama pengirim</span><input id="senderInput" maxlength="40" value="Azis" placeholder="Nama pengirim"></label>
+        </div>
+
+        <div class="editor-section">
+          <div class="section-label">Tampilan</div>
+          <span class="field-label">Ikon utama</span>
+          <div id="emojiPicker" class="emoji-picker" role="radiogroup">
+            <button type="button" class="emoji-chip active" data-emoji="🎂">🎂</button><button type="button" class="emoji-chip" data-emoji="🎉">🎉</button><button type="button" class="emoji-chip" data-emoji="🎁">🎁</button><button type="button" class="emoji-chip" data-emoji="🥳">🥳</button><button type="button" class="emoji-chip" data-emoji="💐">💐</button><button type="button" class="emoji-chip" data-emoji="💖">💖</button><button type="button" class="emoji-chip" data-emoji="🌷">🌷</button><button type="button" class="emoji-chip" data-emoji="👑">👑</button>
+          </div>
+
+          <span class="field-label top-gap">Tema kartu</span>
+          <div id="themePicker" class="theme-picker" role="radiogroup">
+            <button type="button" class="theme-chip active" data-theme="violet"><i></i><span>Violet</span></button>
+            <button type="button" class="theme-chip" data-theme="rose"><i></i><span>Rose</span></button>
+            <button type="button" class="theme-chip" data-theme="sunset"><i></i><span>Sunset</span></button>
+            <button type="button" class="theme-chip" data-theme="ocean"><i></i><span>Ocean</span></button>
+            <button type="button" class="theme-chip" data-theme="emerald"><i></i><span>Emerald</span></button>
+            <button type="button" class="theme-chip" data-theme="midnight"><i></i><span>Midnight</span></button>
+            <button type="button" class="theme-chip" data-theme="peach"><i></i><span>Peach</span></button>
+            <button type="button" class="theme-chip" data-theme="champagne"><i></i><span>Gold</span></button>
+          </div>
+
+          <div class="form-grid two top-gap">
+            <label><span>Gaya huruf</span><select id="fontSelect"><option value="classic">Classic</option><option value="modern">Modern</option><option value="soft">Soft</option></select></label>
+            <label><span>Efek perayaan</span><select id="effectSelect"><option value="confetti">Confetti</option><option value="hearts">Love</option><option value="stars">Bintang</option><option value="none">Tanpa efek</option></select></label>
+            <label><span>Musik</span><select id="musicSelect"><option value="birthday">Birthday chime</option><option value="dreamy">Dreamy</option><option value="none">Tanpa musik</option></select></label>
+            <label><span>Pembuka kartu</span><select id="introSelect"><option value="envelope">Amplop</option><option value="gift">Kotak hadiah</option><option value="direct">Langsung terbuka</option></select></label>
+          </div>
+        </div>
+
+        <div class="editor-section compact">
+          <label class="switch-row"><span><b>Simpan draft otomatis</b><small>Form akan dipulihkan saat halaman dibuka lagi.</small></span><input id="autosaveInput" type="checkbox" checked><i></i></label>
+        </div>
+
+        <div class="action-row">
+          <button id="generateBtn" class="btn primary big" type="button">✨ Buat Link Ucapan</button>
+          <button id="downloadBtn" class="btn secondary" type="button">🖼 Unduh kartu</button>
+          <button id="resetBtn" class="btn ghost" type="button">Reset</button>
+        </div>
+      </form>
+
+      <aside class="preview-wrap">
+        <div class="preview-toolbar"><span>Preview live</span><span class="live-dot"><i></i> Sinkron</span></div>
+        <article id="cardPreview" class="birthday-card theme-violet font-classic">
+          <div class="card-orb orb-a"></div><div class="card-orb orb-b"></div><div class="sparkles">✦ ✧ ✦</div>
+          <img id="previewPhoto" class="recipient-photo hidden" alt="Foto penerima">
+          <div id="previewEmoji" class="main-emoji">🎂</div>
+          <p class="to-label">Untuk</p><h2 id="previewRecipient">Citra</h2><p id="previewDate" class="special-date hidden"></p>
+          <h3 id="previewTitle">Selamat Ulang Tahun!</h3><p id="previewMessage" class="card-message"></p>
+          <div class="card-signature">Dengan doa terbaik,<br><strong id="previewSender">Azis</strong></div>
+        </article>
+        <div class="preview-tip"><span>💡</span><p><b>Tip:</b> foto dikompres otomatis agar dapat ikut tersimpan di link. Untuk link paling pendek, gunakan kartu tanpa foto.</p></div>
+      </aside>
+    </section>
+
+    <section id="sharePanel" class="share-panel glass hidden" aria-live="polite">
+      <div class="share-head"><div><span class="eyebrow">Link siap dibagikan</span><h2>Kartu untuk <span id="shareRecipient">penerima</span> sudah siap 🎉</h2><p>Penerima akan melihat halaman pembuka dan kartu, bukan editor.</p></div><span id="urlHealth" class="url-health good">Link ringan</span></div>
+      <div class="link-box"><input id="shareUrl" readonly><button id="copyBtn" class="btn primary" type="button">Salin Link</button></div>
+      <div class="share-actions"><button id="nativeShareBtn" class="btn secondary" type="button">↗️ Bagikan</button><a id="whatsappBtn" class="btn whatsapp" target="_blank" rel="noopener">WhatsApp</a><button id="openLinkBtn" class="btn secondary" type="button">Buka Link</button></div>
+      <p id="hostingWarning" class="hosting-warning hidden">⚠ Link lokal hanya bisa dibuka di perangkat ini. Upload aplikasi ke hosting terlebih dahulu sebelum mengirimkannya ke orang lain.</p>
+    </section>
+
+    <section class="info-grid">
+      <article class="glass"><span>🔗</span><h3>Link mandiri</h3><p>Isi kartu disimpan di bagian hash URL sehingga server hosting tidak menyimpan ucapan Anda.</p></article>
+      <article class="glass"><span>📱</span><h3>Installable PWA</h3><p>Setelah di-host lewat HTTPS, aplikasi bisa dipasang ke layar utama HP atau desktop.</p></article>
+      <article class="glass"><span>🪄</span><h3>Tanpa backend</h3><p>Tidak perlu database untuk membuat dan membuka kartu. Cocok untuk GitHub Pages atau Netlify.</p></article>
+    </section>
+    <footer>Birthday Link Studio 2.0 • dibuat untuk momen yang spesial.</footer>
+  </main>
+
+  <main id="viewerView" class="viewer hidden">
+    <div class="viewer-bg"></div>
+    <div class="viewer-controls"><button id="viewerMusicBtn" class="circle-btn" type="button" aria-label="Putar atau hentikan musik">♫</button><button id="makeOwnBtn" class="circle-btn" type="button" aria-label="Buat kartu sendiri">✎</button></div>
+
+    <section id="introStage" class="intro-stage">
+      <div id="introEnvelope" class="intro-object envelope">
+        <div class="envelope-back"></div><div class="envelope-letter"><span>Untuk</span><strong id="introRecipient">Kamu</strong><small>Ada ucapan spesial ✨</small></div><div class="envelope-front"></div><div class="envelope-flap"></div>
+      </div>
+      <div id="introGift" class="intro-object gift hidden"><div class="gift-lid"><i></i></div><div class="gift-box"><i></i><span>🎁</span></div></div>
+      <h1 id="introTitle">Seseorang mengirimkan sesuatu untukmu…</h1><p>Klik tombol di bawah untuk membukanya.</p><button id="openCardBtn" class="btn primary big" type="button">💌 Buka kartu</button>
+    </section>
+
+    <section id="viewerCardStage" class="viewer-card-wrap hidden">
+      <article id="viewerCard" class="birthday-card large-card theme-violet font-classic">
+        <div class="card-orb orb-a"></div><div class="card-orb orb-b"></div><div class="sparkles">✦ ✧ ✦</div>
+        <img id="viewerPhoto" class="recipient-photo hidden" alt="Foto penerima">
+        <div id="viewerEmoji" class="main-emoji">🎂</div><p class="to-label">Untuk</p><h1 id="viewerRecipient"></h1><p id="viewerDate" class="special-date hidden"></p><h2 id="viewerTitle"></h2><p id="viewerMessage" class="card-message"></p><div class="card-signature">Dengan doa terbaik,<br><strong id="viewerSender"></strong></div>
+      </article>
+      <div class="viewer-actions"><button id="celebrateBtn" class="btn primary" type="button">🎉 Rayakan lagi</button><button id="shareReceivedBtn" class="btn secondary" type="button">↗ Bagikan</button></div>
+      <p class="viewer-note">Semoga harimu menyenangkan ✨</p>
+    </section>
+  </main>
+
+  <canvas id="exportCanvas" width="1080" height="1350" hidden></canvas>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
